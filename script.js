@@ -1,33 +1,39 @@
-// small progressive JS: background color cycle, reveal on scroll, form handler
+// Navigation toggle for mobile
+const navToggle = document.querySelectorAll('.nav-toggle');
+navToggle.forEach(btn => btn.addEventListener('click', ()=>{
+const links = btn.parentElement.querySelector('.nav-links');
+if(!links) return;
+links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+}));
 
 
-// reveal on scroll
-function revealOnScroll(){
-const items = document.querySelectorAll('.reveal');
-const offset = window.innerHeight * 0.85;
-items.forEach(i=>{
-const top = i.getBoundingClientRect().top;
-if(top < offset) i.classList.add('show');
-})
-}
-window.addEventListener('scroll', revealOnScroll);
-window.addEventListener('resize', revealOnScroll);
-document.addEventListener('DOMContentLoaded', ()=>{ revealOnScroll(); document.getElementById('year').textContent = new Date().getFullYear(); });
+// Year updater
+document.getElementById('year')?.appendChild(document.createTextNode(new Date().getFullYear()));
+document.getElementById('year2')?.appendChild(document.createTextNode(new Date().getFullYear()));
+document.getElementById('year3')?.appendChild(document.createTextNode(new Date().getFullYear()));
+document.getElementById('year4')?.appendChild(document.createTextNode(new Date().getFullYear()));
 
 
-// simple contact form behavior
-const form = document.getElementById('contactForm');
-if(form){
-form.addEventListener('submit', (e)=>{
+// Simple contact form handler (example only)
+document.getElementById('contactForm')?.addEventListener('submit', e=>{
 e.preventDefault();
-const name = document.getElementById('name').value.trim();
-const email = document.getElementById('email').value.trim();
-const message = document.getElementById('message').value.trim();
-const note = document.getElementById('note');
-if(!name||!email||!message){ note.textContent = 'Please fill all fields.'; return }
-const subject = encodeURIComponent('Portfolio contact from ' + name);
-const body = encodeURIComponent(message + "— " + name + " (" + email + ")");
-window.location.href = `mailto:hello@darpan.com?subject=${subject}&body=${body}`;
-note.textContent = 'Opening your email client...';
-})
+const name = document.getElementById('name').value;
+const email = document.getElementById('email').value;
+const message = document.getElementById('message').value;
+alert(`Thanks ${name}! Message received. (This is a demo handler)`);
+// You can hook this to EmailJS, Formspree, or a backend.
+e.target.reset();
+});
+
+
+// Smooth in-page scroll (if needed)
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+a.addEventListener('click', e=>{
+const href = a.getAttribute('href');
+if(href.length>1 && href.startsWith('#')){
+e.preventDefault();
+const el = document.querySelector(href);
+if(el) el.scrollIntoView({behavior:'smooth'});
 }
+});
+});
