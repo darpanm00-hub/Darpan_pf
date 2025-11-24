@@ -1,3 +1,11 @@
+// Theme toggle
+const themeBtn=document.getElementById('themeToggle');
+if(themeBtn){themeBtn.addEventListener('click',()=>{
+const isLight=document.documentElement.classList.toggle('light');
+localStorage.setItem('theme',isLight?'light':'dark');
+themeBtn.textContent=isLight?'☀️':'🌙';
+});}
+
 // Navigation toggle for mobile
 const navToggle = document.querySelectorAll('.nav-toggle');
 navToggle.forEach(btn => btn.addEventListener('click', ()=>{
